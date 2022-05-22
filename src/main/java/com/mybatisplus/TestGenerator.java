@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 public class TestGenerator {
 
@@ -47,7 +49,30 @@ public class TestGenerator {
         //####
         //配置策略
         StrategyConfig strategyConfig = new StrategyConfig();
-        
+        strategyConfig.setInclude();//设置要包含的表
+        strategyConfig.setTablePrefix("");//设置表的前缀
+        strategyConfig.setNaming(NamingStrategy.no_change);//映射实体类的时候命名策略
+
+        //####
+        //包名配置
+        PackageConfig packageConfig = new PackageConfig();
+        packageConfig.setParent("com.mybatisplus");
+        packageConfig.setMapper("mapper");
+        packageConfig.setService("service");
+        packageConfig.setServiceImpl("service.impl");
+        packageConfig.setController("controller");
+        packageConfig.setEntity("bean");
+        packageConfig.setXml("mapper.xml");
+
+        //设置到autoGenerator中
+        autoGenerator.setGlobalConfig(globalConfig)
+                .setDataSource(dataSourceConfig)
+                .setStrategy(strategyConfig)
+                .setPackageInfo(packageConfig);
+        //开始请求
+        autoGenerator.execute();
+
+
 
     }
 }
